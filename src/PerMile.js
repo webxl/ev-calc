@@ -62,9 +62,9 @@ class PerMile extends Component {
   }
 
   formClick = event => {
-    this.setState({
-      popoverOpen: false
-    });
+    // this.setState({
+    //   popoverOpen: false
+    // });
   };
 
   componentWillUpdate(np, ns) {
@@ -123,10 +123,27 @@ class PerMile extends Component {
         {opFormGroup({op: 'efficiency', label: 'Efficiency', prepend: '', append: '%'})}
         {opFormGroup({
           op: 'result',
-          label: 'Cost',
+          label: 'Charging Cost',
           prepend: this.state.currency,
           append: '/ ' + this.state.distanceUnit,
           precision: 4,
+          calculated: true
+        })}
+        {opFormGroup({op: 'gasPrice', label: 'Gas Price', toFixed: 2, prepend: this.state.currency, append: ''})}
+
+        {opFormGroup({op: 'gasEfficiency', label: 'Gas Economy', prepend: '', append: this.state.economyUnit})}
+        {opFormGroup({
+          op: 'gasTotal',
+          label: 'Gas Total',
+          prepend: this.state.currency,
+          toFixed: 2,
+          calculated: true
+        })}
+        {opFormGroup({
+          op: 'savingsResult',
+          label: 'Savings',
+          prepend: this.state.currency,
+          toFixed: 2,
           calculated: true
         })}
       </Form>

@@ -13,7 +13,9 @@ class TotalCost extends Component {
       region: props.options.region,
       currency: props.options.currency,
       utilityChargeRate: props.options.rate,
-      distanceUnit: props.options.distanceUnit
+      distanceUnit: props.options.distanceUnit,
+      economyUnit: props.options.economyUnit,
+      popoverOpen: false
     };
   }
 
@@ -32,10 +34,13 @@ class TotalCost extends Component {
   handleOptionChange = event => {
     let val = event.target.value;
     this.setState({
-      distanceUnit: val
+      distanceUnit: val,
+      economyUnit: val === 'km' ? 'km/l':'mpg'
+
     });
     this.props.updateOptions({
-      distanceUnit: val
+      distanceUnit: val,
+      economyUnit: val === 'km' ? 'km/l':'mpg'
     });
     this.props.convertDistance(val);
   };
@@ -47,6 +52,8 @@ class TotalCost extends Component {
     if (props.options.country !== this.state.country) {
       this.setState ({ utilityChargeRate: props.options.rate });
       this.setState ({ currency: props.options.currency });
+      this.setState ({ economyUnit: props.options.economyUnit });
+      this.setState ({ gasPrice: props.options.gas });
     }
 
     if (props.options.region !== this.state.region) {
@@ -76,9 +83,17 @@ class TotalCost extends Component {
   };
 
   getCalcProps() {
-    const { distance, utilityChargeRate, efficiency, chargePerDistanceUnit, consumption } = this.state;
-    return { distance, utilityChargeRate, efficiency, chargePerDistanceUnit, consumption };
+    const { distance, utilityChargeRate, efficiency, chargePerDistanceUnit, consumption,
+      gasPrice, gasEfficiency, gasTotal, savingsResult} = this.state;
+    return { distance, utilityChargeRate, efficiency, chargePerDistanceUnit, consumption,
+      gasPrice, gasEfficiency, gasTotal, savingsResult};
   }
+
+  formClick = event => {
+    this.setState({
+      popoverOpen: false
+    });
+  };
 
   render() {
 
@@ -117,7 +132,24 @@ class TotalCost extends Component {
         {opFormGroup({op: 'efficiency', label: 'Efficiency', prepend: '', append: '%'})}
         {opFormGroup({
           op: 'result',
-          label: 'Cost',
+          label: 'Charging Cost',
+          prepend: this.state.currency,
+          toFixed: 2,
+          calculated: true
+        })}
+        {opFormGroup({op: 'gasPrice', label: 'Gas Price', toFixed: 2, prepend: this.state.currency, append: ''})}
+
+        {opFormGroup({op: 'gasEfficiency', label: 'Gas Economy', prepend: '', append: this.state.economyUnit})}
+        {opFormGroup({
+          op: 'gasTotal',
+          label: 'Gas Total',
+          prepend: this.state.currency,
+          toFixed: 2,
+          calculated: true
+        })}
+        {opFormGroup({
+          op: 'savingsResult',
+          label: 'Savings',
           prepend: this.state.currency,
           toFixed: 2,
           calculated: true
@@ -133,7 +165,7 @@ class TotalCost extends Component {
 const mapDispatch = dispatch => ({
   calcTotalCost: dispatch.totalCost.calculate,
   updateOptions: dispatch.options.update,
-  convertDistance: dispatch.costPerMile.convertDistance
+  convertDistance: dispatch.totalCost.convertDistance
 });
 
 const mapState = state => {

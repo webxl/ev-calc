@@ -93,7 +93,35 @@ class GasSavings extends Component {
     return (
       <Form onSubmit={this.handleSubmit} onClick={this.formClick}>
 
-        <h4>Coming Soon</h4>
+        <UnitSelection distanceUnit={this.state.distanceUnit} onChange={this.handleOptionChange}/>
+
+        {opFormGroup({op: 'distance', label: 'Distance', append: this.state.distanceUnit})}
+        {opFormGroup({
+          op: 'chargePerDistanceUnit',
+          label: 'Avg. Energy',
+          prepend: '',
+          append: 'Wh / ' + this.state.distanceUnit,
+          precision: 4
+        })}
+        {opFormGroup({op: 'consumption', label: 'Energy', prepend: '', append: 'kWh',
+          calculated: true})}
+
+        {opFormGroup({
+          op: 'utilityChargeRate',
+          label: 'Utility Rate',
+          prepend: this.state.currency,
+          toFixed: 4,
+          append: '/ kWh',
+          addon: globeButton
+        })}
+        {opFormGroup({op: 'efficiency', label: 'Efficiency', prepend: '', append: '%'})}
+        {opFormGroup({
+          op: 'result',
+          label: 'Cost',
+          prepend: this.state.currency,
+          toFixed: 2,
+          calculated: true
+        })}
 
       </Form>
     );

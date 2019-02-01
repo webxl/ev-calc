@@ -26,7 +26,7 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(cookieParser());
 server.use('/lib', express.static(path.join(__dirname, 'node_modules')));
-server.use('/dist', express.static(path.join(__dirname, 'dist')));
+server.use('/dist', express.static(path.join(__dirname, 'public/dist')));
 server.use('/', express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler

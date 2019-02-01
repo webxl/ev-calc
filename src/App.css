@@ -78,3 +78,7 @@ a.nav-link {
 .bottom-notes {
   margin-top: 50px;
 }
+
+body .popover {
+  max-width: inherit;
+}

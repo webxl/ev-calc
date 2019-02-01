@@ -2,7 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 
 const paths = {
-  DIST: path.resolve(__dirname, 'public/dist'),
+  DIST: path.resolve(__dirname, 'dist'),
+  PROD_DIST: path.resolve(__dirname, 'public/dist'),
   JS: path.resolve(__dirname, 'src'),
 };
 
@@ -74,6 +75,13 @@ const development = {
 const production = {
   entry: {
     main: path.join(paths.JS, 'index.js')
+  },
+  output: {
+    path: paths.PROD_DIST,
+    filename: '[name].bundle.js',
+    library: 'evCalc',
+    libraryTarget: 'umd',
+    publicPath: '/'
   },
   mode: 'production',
   devtool: 'source-map',

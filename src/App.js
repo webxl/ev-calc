@@ -30,7 +30,7 @@ class App extends Component {
         <header className="App-header">
           EV Calc
           <sub>
-            Energy & Cost
+            Energy & Savings Calculator
           </sub>
         </header>
         <Container>
@@ -40,7 +40,7 @@ class App extends Component {
                 className={classNames({ active: this.state.activeTab === '1' })}
                 onClick={() => { this.toggle('1'); }}
               >
-                Per Mile
+                 Cumulative
               </NavLink>
             </NavItem>
             <NavItem>
@@ -48,15 +48,7 @@ class App extends Component {
                 className={classNames({ active: this.state.activeTab === '2' })}
                 onClick={() => { this.toggle('2'); }}
               >
-                Cumulative
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={classNames({ active: this.state.activeTab === '3' })}
-                onClick={() => { this.toggle('3'); }}
-              >
-                Gas Savings
+                Per Mile
               </NavLink>
             </NavItem>
             <NavItem>
@@ -72,22 +64,15 @@ class App extends Component {
             <TabPane tabId="1">
               <Row>
                 <Col md={{ size: 6, offset: 0 }}>
-                  <PerMile isActive={this.state.activeTab === '1' } />
+                  <TotalCost isActive={this.state.activeTab === '2' } />
                 </Col>
               </Row>
             </TabPane>
             <TabPane tabId="2">
               <Row>
               <Col md={{ size: 6, offset: 0 }}>
-                <TotalCost isActive={this.state.activeTab === '2' } />
+                <PerMile isActive={this.state.activeTab === '1' } />
               </Col>
-              </Row>
-            </TabPane>
-            <TabPane tabId="3">
-              <Row>
-                <Col md={{ size: 6, offset: 0 }}>
-                  <GasSavings isActive={this.state.activeTab === '3' } />
-                </Col>
               </Row>
             </TabPane>
           </TabContent>
@@ -97,7 +82,6 @@ class App extends Component {
                 <ul>
                   <li>If you're interested in buying a Tesla and want <strong>6 months of free Supercharging, please use <a href={this.state.priceLink}>my referral code</a></strong> to help support this site.</li>
                   <li> If you have any issues or comments, please  <a href="mailto:site@webxl.net?subject=Tesla%20Wait">contact me</a>.</li>
-                  <li>Savings based on Tesla's default fuel settings and Federal and California tax credits *</li>
                   <li>Source Code is available on <a href="http://github.com/webxl/ev-calc">GitHub</a></li>
                 </ul>
               </div>

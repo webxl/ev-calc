@@ -69,11 +69,14 @@ class LocationSelector extends Component {
             Sources:
             <ul>
               <li>
-                <a href="https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a">U.S. Energy Information Administration</a>
+                <a href="https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a">U.S. Energy Information Administration: Electricity</a>
               </li>
 
               <li>
                 <a href="https://en.wikipedia.org/wiki/Electricity_pricing#Global_comparison">Wikipedia: Global Electricity Pricing</a>
+              </li>
+              <li>
+                <a href="https://www.eia.gov/dnav/pet/pet_pri_gnd_dcus_nus_w.htm">U.S. Energy Information Administration: Retail Gas</a>
               </li>
             </ul>
           </Col>

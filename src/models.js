@@ -10,14 +10,20 @@ export const costPerMile = {
     efficiency: 85,
     chargePerDistanceUnit: 0, // 100 Wh / mi
     consumption: 75, // 1 kWh == 1000 Wh
-    result: 0
+    result: 0,
+    gasPrice: 2.343,
+    gasEfficiency: 30,
+    gasTotal: 0,
+    savingsResult: 0
   },
   reducers: {
     calculate: (state, ns) => {
       let cs = {...state, ...ns};
       let chargePerDistanceUnit = cs.consumption * 1000 / cs.distance;
       let result = (cs.consumption * (1 / (cs.efficiency/100)) * cs.utilityChargeRate) / cs.distance;
-      return {...cs, result, chargePerDistanceUnit}
+      let gasTotal = ((cs.distance / cs.gasEfficiency) * cs.gasPrice)  / cs.distance ;
+      let savingsResult = gasTotal - result;
+      return {...cs, result, chargePerDistanceUnit, gasTotal, savingsResult}
     },
     convertDistance: (state, targetUnit) => {
       return {...state, distance: convertMiKm(state.distance, targetUnit)};
@@ -32,14 +38,23 @@ export const totalCost = {
     efficiency: 85,
     chargePerDistanceUnit: 256, // 100 Wh / mi
     consumption: 75, // 1 kWh == 1000 Wh
-    result: 0
+    result: 0,
+    gasPrice: 2.343,
+    gasEfficiency: 30,
+    gasTotal: 0,
+    savingsResult: 0
   },
   reducers: {
     calculate: (state, ns) => {
       let cs = {...state, ...ns};
       let consumption = (cs.chargePerDistanceUnit * cs.distance) / 1000;
       let result = (consumption * (1 / (cs.efficiency/100)) * cs.utilityChargeRate);
-      return {...cs, result, consumption}
+      let gasTotal = (cs.distance / cs.gasEfficiency) * cs.gasPrice;
+      let savingsResult = gasTotal - result;
+      return {...cs, result, consumption, gasTotal, savingsResult}
+    },
+    convertDistance: (state, targetUnit) => {
+      return {...state, distance: convertMiKm(state.distance, targetUnit)};
     }
   }
 };
@@ -66,6 +81,7 @@ const locations = [
   {
     label: 'U.S.',
     currency: '$',
+    gas: '2.343',
     regions: [
       { label: "Average", rate: 0.1295 },
       { label: "Alabama", rate: 0.1242 },
@@ -163,10 +179,12 @@ const locations = [
 export const options = {
   state: {
     distanceUnit: 'mi',
+    economyUnit: 'mpg',
     country: 'U.S.',
     currency: '$',
     region: 'Average',
-    rate: '0.1295'
+    rate: '0.1295',
+    gas: '2.343'
   },
   reducers: {
     update: (state, ns) => {
