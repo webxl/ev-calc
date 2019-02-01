@@ -1,0 +1,80 @@
+.App {
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 20vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  margin-bottom: 10px;
+}
+
+.App-header sub {
+  font-size: calc(1px + 2vmin);
+  color: #ccc;
+  margin-top: 5px;
+}
+@media (max-width: 576px) {
+  .App-header {
+    font-size: calc(20px + 2vmin);
+  }
+  .App-header sub {
+    font-size: calc(10px + 2vmin);
+  }
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.input-group-prepend .btn-secondary {
+  color: #495057;
+  background-color: #f4f5f7;
+  border-color: #dee2e6;
+}
+
+.unit-selection .col-sm-8 {
+  padding-top: 7px;
+}
+
+.tab-content {
+  padding-top: 20px;
+}
+
+.nav-link {
+  cursor: pointer;
+}
+a.nav-link {
+  color: inherit;
+}
+
+.site-notes, .savings-note {
+  color: #66788A;
+  display: block;
+  font-size: 12px;
+}
+.site-notes {
+  color: #234361;
+  text-align: left;
+  display: inline-block;
+  margin-top: 100px;
+}
+
+.savings-note {
+  margin-top: 20px;
+}
+.bottom-notes {
+  margin-top: 50px;
+}
