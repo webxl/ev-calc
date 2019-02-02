@@ -5,7 +5,6 @@ import { TabContent, TabPane, Nav, NavItem, NavLink, Container, Row, Col } from 
 import classNames from 'classnames';
 import TotalCost from "./TotalCost";
 import PerMile from "./PerMile";
-import GasSavings from "./GasSavings";
 
 class App extends Component {
   constructor(props) {
@@ -62,18 +61,10 @@ class App extends Component {
           </Nav>
           <TabContent activeTab={this.state.activeTab}>
             <TabPane tabId="1">
-              <Row>
-                <Col md={{ size: 6, offset: 0 }}>
-                  <TotalCost isActive={this.state.activeTab === '2' } />
-                </Col>
-              </Row>
+              <TotalCost isActive={this.state.activeTab === '1'} />
             </TabPane>
             <TabPane tabId="2">
-              <Row>
-              <Col md={{ size: 6, offset: 0 }}>
-                <PerMile isActive={this.state.activeTab === '1' } />
-              </Col>
-              </Row>
+              <PerMile isActive={this.state.activeTab === '2'} />
             </TabPane>
           </TabContent>
           <Row>
@@ -81,7 +72,7 @@ class App extends Component {
               <div className="site-notes">
                 <ul>
                   <li>If you're interested in buying a Tesla and want <strong>6 months of free Supercharging, please use <a href={this.state.priceLink}>my referral code</a></strong> to help support this site.</li>
-                  <li> If you have any issues or comments, please  <a href="mailto:site@webxl.net?subject=Tesla%20Wait">contact me</a>.</li>
+                  <li> If you have any issues or comments, please  <a href="mailto:site@webxl.net?subject=EVCalc">contact me</a>.</li>
                   <li>Source Code is available on <a href="http://github.com/webxl/ev-calc">GitHub</a></li>
                 </ul>
               </div>

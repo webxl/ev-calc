@@ -46,17 +46,17 @@ export const OpFormGroup = ({op, label, handleTextChange, type = 'number', prepe
   };
 
   if (type === 'number' && prepend === '$')
-    inputProps.step = 0.1;
+    inputProps.step = 0.01;
 
   if (op !== document.activeElement.id) {
     inputProps.value = toFixed !== undefined ? _value.toFixed(toFixed) : (precision !== undefined ? _value.toPrecision(precision) : _value.toFixed());
-  }
 
-  if (prepend && toFixed) {
-    inputProps.value = _value.toFormat(toFixed);
-    inputProps.type = 'text';
-  }
 
+    if (prepend && toFixed) {
+      inputProps.value = _value.toFormat(toFixed);
+      inputProps.type = 'text';
+    }
+  }
   if (calculated)
     inputProps.readOnly = true;
 

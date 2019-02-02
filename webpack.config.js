@@ -17,7 +17,7 @@ const configuration = {
     filename: '[name].bundle.js',
     library: 'evCalc',
     libraryTarget: 'umd',
-    publicPath: '/'
+    publicPath: '/dist/'
   },
   mode: 'development',
   module: {

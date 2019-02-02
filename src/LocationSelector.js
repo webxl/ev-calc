@@ -78,6 +78,9 @@ class LocationSelector extends Component {
               <li>
                 <a href="https://www.eia.gov/dnav/pet/pet_pri_gnd_dcus_nus_w.htm">U.S. Energy Information Administration: Retail Gas</a>
               </li>
+              <li>
+                <a href="https://www.youtube.com/watch?v=CcmZ1dof3Qw">Funny Simpsons clip</a>
+              </li>
             </ul>
           </Col>
         </Row>

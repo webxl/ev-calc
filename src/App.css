@@ -82,3 +82,6 @@ a.nav-link {
 body .popover {
   max-width: inherit;
 }
+.nav-tabs {
+  margin-left: -10px;
+}

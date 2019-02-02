@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {Form} from 'reactstrap';
+import {Row, Col, Form} from 'reactstrap';
 import {LocationButton, OpFormGroup, UnitSelection} from "./Components";
 import {hot} from 'react-hot-loader/root';
 
 class PerMile extends Component {
- constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       ...props.costPerMile,
@@ -45,12 +45,12 @@ class PerMile extends Component {
     this.setState({...props.costPerMile, ...props.options});
 
     if (props.options.country !== this.state.country) {
-      this.setState ({ utilityChargeRate: props.options.rate });
-      this.setState ({ currency: props.options.currency });
+      this.setState({utilityChargeRate: props.options.rate});
+      this.setState({currency: props.options.currency});
     }
 
     if (props.options.region !== this.state.region) {
-      this.setState ({ utilityChargeRate: props.options.rate });
+      this.setState({utilityChargeRate: props.options.rate});
     }
 
     if (!props.isActive) {
@@ -62,9 +62,9 @@ class PerMile extends Component {
   }
 
   formClick = event => {
-    // this.setState({
-    //   popoverOpen: false
-    // });
+    this.setState({
+      popoverOpen: false
+    });
   };
 
   componentWillUpdate(np, ns) {
@@ -83,70 +83,86 @@ class PerMile extends Component {
   };
 
   getCalcProps() {
-    const { distance, utilityChargeRate, efficiency, chargePerDistanceUnit, consumption } = this.state;
-    return { distance, utilityChargeRate, efficiency, chargePerDistanceUnit, consumption };
+    const {
+      distance, utilityChargeRate, efficiency, chargePerDistanceUnit, consumption,
+      gasPrice, gasEfficiency, gasTotal, savingsResult
+    } = this.state;
+    return {
+      distance, utilityChargeRate, efficiency, chargePerDistanceUnit, consumption,
+      gasPrice, gasEfficiency, gasTotal, savingsResult
+    };
   }
 
   render() {
 
-    const opFormGroup = ({op, label, type = 'number', prepend, append, value = this.state[op], precision, addon, calculated }) =>
-      <OpFormGroup op={op} label={label} prepend={prepend} append={append} value={value}  calculated={calculated }
+    const opFormGroup = ({op, label, type = 'number', prepend, append, value = this.state[op], precision, addon, calculated}) =>
+      <OpFormGroup op={op} label={label} prepend={prepend} append={append} value={value} calculated={calculated}
                    addon={addon} precision={precision} handleTextChange={this.handleTextChange}/>;
 
     const globeButton = (
-      <LocationButton onClick={this.toggle} open={this.state.popoverOpen} country={this.state.country} region={this.state.region }/>
+      <LocationButton onClick={this.toggle} open={this.state.popoverOpen} country={this.state.country}
+                      region={this.state.region}/>
     );
 
     return (
-      <Form onSubmit={this.handleSubmit} onClick={this.formClick}>
+      <Row id={'perMile'}>
+        <Col sm={{size: 6}}>
+          <Form onSubmit={this.handleSubmit} onClick={this.formClick}>
 
-        <UnitSelection distanceUnit={this.state.distanceUnit} onChange={this.handleOptionChange}/>
 
-        {opFormGroup({op: 'distance', label: 'Distance', append: this.state.distanceUnit})}
-        {opFormGroup({op: 'consumption', label: 'Energy', prepend: '', append: 'kWh' })}
-        {opFormGroup({
-          op: 'chargePerDistanceUnit',
-          label: 'Avg. Energy',
-          prepend: '',
-          precision: 4,
-          append: 'Wh / ' + this.state.distanceUnit,
-          calculated: true
-        })}
-        {opFormGroup({
-          op: 'utilityChargeRate',
-          label: 'Utility Rate',
-          prepend: this.state.currency,
-          toFixed: 4,
-          append: '/ kWh',
-          addon: globeButton
-        })}
-        {opFormGroup({op: 'efficiency', label: 'Efficiency', prepend: '', append: '%'})}
-        {opFormGroup({
-          op: 'result',
-          label: 'Charging Cost',
-          prepend: this.state.currency,
-          append: '/ ' + this.state.distanceUnit,
-          precision: 4,
-          calculated: true
-        })}
-        {opFormGroup({op: 'gasPrice', label: 'Gas Price', toFixed: 2, prepend: this.state.currency, append: ''})}
+            {opFormGroup({op: 'distance', label: 'Distance', append: this.state.distanceUnit})}
+            {opFormGroup({op: 'consumption', label: 'Energy', prepend: '', append: 'kWh'})}
+            {opFormGroup({
+              op: 'chargePerDistanceUnit',
+              label: 'Avg. Energy',
+              prepend: '',
+              precision: 4,
+              append: 'Wh / ' + this.state.distanceUnit,
+              calculated: true
+            })}
+            {opFormGroup({
+              op: 'utilityChargeRate',
+              label: 'Utility Rate',
+              prepend: this.state.currency,
+              toFixed: 4,
+              append: '/ kWh',
+              addon: globeButton
+            })}
+            {opFormGroup({op: 'efficiency', label: 'Efficiency', prepend: '', append: '%'})}
+            {opFormGroup({
+              op: 'result',
+              label: 'Charging Cost',
+              prepend: this.state.currency,
+              append: '/ ' + this.state.distanceUnit,
+              precision: 4,
+              calculated: true
+            })}
+          </Form>
+        </Col>
+        <Col sm={{size: 6}}>
+          <Form onSubmit={this.handleSubmit} onClick={this.formClick}>
+            <UnitSelection distanceUnit={this.state.distanceUnit} onChange={this.handleOptionChange}/>
 
-        {opFormGroup({op: 'gasEfficiency', label: 'Gas Economy', prepend: '', append: this.state.economyUnit})}
-        {opFormGroup({
-          op: 'gasTotal',
-          label: 'Gas Total',
-          prepend: this.state.currency,
-          toFixed: 2,
-          calculated: true
-        })}
-        {opFormGroup({
-          op: 'savingsResult',
-          label: 'Savings',
-          prepend: this.state.currency,
-          toFixed: 2,
-          calculated: true
-        })}
-      </Form>
+            {opFormGroup({op: 'gasPrice', label: 'Gas Price', toFixed: 2, prepend: this.state.currency, append: ''})}
+
+            {opFormGroup({op: 'gasEfficiency', label: 'Gas Economy', prepend: '', append: this.state.economyUnit})}
+            {opFormGroup({
+              op: 'gasTotal',
+              label: 'Gas Total',
+              prepend: this.state.currency,
+              toFixed: 2,
+              calculated: true
+            })}
+            {opFormGroup({
+              op: 'savingsResult',
+              label: 'Savings',
+              prepend: this.state.currency,
+              toFixed: 2,
+              calculated: true
+            })}
+          </Form>
+        </Col>
+      </Row>
     );
   }
 }
@@ -159,7 +175,7 @@ const mapDispatch = dispatch => ({
 });
 
 const mapState = state => {
-  return { ...state };
+  return {...state};
 };
 
 export default hot(connect(mapState, mapDispatch)(PerMile));
